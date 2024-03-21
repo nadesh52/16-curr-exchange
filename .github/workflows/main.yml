@@ -1,0 +1,40 @@
+name: Build PROD-ON PREM TORPEDO DATABASE
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        type: choice
+        description: Repository for Build
+        required: true
+        options:
+          - torpedo-database-service
+      tag:
+        description: 'Repository tag'
+        required: true
+
+env:
+  USERNAME: ${{ secrets.USERNAME}}
+  MY_PERSONAL_TOKEN: ${{ secrets.TOKEN}}
+  APP_NAME: torpedo-database-service
+  BRANCH_NAME: master
+
+jobs:
+  build:
+    name: build
+    runs-on: [ekyc-prd-onprem]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          repository: corp-ais/torpedo-database-service
+          token: $MY_PERSONAL_TOKEN
+          persist-credentials: true
+          username: $USERNAME
+          ref: master
+
+      - name: Checkout node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15.14.0
