@@ -1,4 +1,4 @@
-name: test-build-main
+name: test-build-dev
 
 on: 
   workflow_dispatch:
